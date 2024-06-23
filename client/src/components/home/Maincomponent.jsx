@@ -1,9 +1,22 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react'
 import Banner from './Banner'
 import "./home.css"
 import Slide from './Slide'
+import { getProducts } from '../redux/actions/action'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Maincomponent() {
+
+  const { products } = useSelector(state => state.getProductsData)
+  console.log(products)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [dispatch])
+
   return (
     <div className='home_section'>
       <div className='banner_part'>

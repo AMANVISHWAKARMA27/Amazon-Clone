@@ -1,1 +1,1 @@
-export const DB_NAME = "Amazon Clone"
+export const DB_NAME = "Amazon-Clone"
