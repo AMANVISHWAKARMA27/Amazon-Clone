@@ -1,5 +1,7 @@
 import express from "express";
 import { Products } from "../models/productSchema.js";
+import { User } from "../models/userSchema.js";
+import { error } from "console";
 
 export const router = new express.Router()
 
@@ -23,4 +25,42 @@ router.get("/getproductsone/:id", async (req, res) => {
         res.status(400).json(individualData)
         console.log("Error at router: " + error.message)
     }
+})
+0
+router.post("/register", async (req, res) => {
+    // console.log(req.body)
+
+    const { name, email, mobile, password, confirmPassword } = req.body
+
+    if (!name || !email || !mobile || !password || !confirmPassword) {
+        res.status(422).json({ error: "Fill all the data!" })
+        console.log("No data available")
+    }
+
+    try {
+        const preUser = await User.findOne({ email: email })
+
+        if (preUser) {
+            res.status(422).json({
+                error
+                    : 'User already exists.'
+            })
+        } else if (password != confirmPassword) {
+            res.status(422).json({
+                error
+                    : "Confirm password doesn't match to the password."
+            })
+        } else {
+            const finalUser = new User({
+                name, email, mobile, password, confirmPassword
+            })
+
+            const storeData = await finalUser.save()
+            console.log(storeData)
+            res.status(201).json(storeData)
+        }
+    } catch (error) {
+        throw new Error("Error while registering user.")
+    }
+
 })
