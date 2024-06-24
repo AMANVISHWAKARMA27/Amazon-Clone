@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Signin />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/getproducts/:id" element={<Cart />} />
+        <Route path="/getproductsone/:id" element={<Cart />} />
         <Route path="/buynow" element={<Buynow />} />
       </Routes>
       <Footer />

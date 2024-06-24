@@ -12,3 +12,15 @@ router.get('/getproducts', async (req, res) => {
         console.log("Error: " + error.message)
     }
 })
+
+router.get("/getproductsone/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        // console.log(id)
+        const individualData = await Products.findOne({ id: id })
+        res.status(201).json(individualData)
+    } catch (error) {
+        res.status(400).json(individualData)
+        console.log("Error at router: " + error.message)
+    }
+})
