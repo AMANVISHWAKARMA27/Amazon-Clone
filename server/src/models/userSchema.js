@@ -47,13 +47,16 @@ const userSchema = new mongoose.Schema({
     carts: Array
 })
 
-const User = new mongoose.model("User", userSchema)
-
 userSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
         this.password = await bcryptjs.hash(this.password, 12);
+
+        this.confirmPassword = await bcryptjs.hash(this.confirmPassword, 12)
     }
     next();
 });
+
+const User = new mongoose.model("User", userSchema)
+
 
 export default User
