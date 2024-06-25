@@ -1,6 +1,6 @@
 import express from "express";
 import { Products } from "../models/productSchema.js";
-import { User } from "../models/userSchema.js";
+import User from "../models/userSchema.js";
 import { error } from "console";
 
 export const router = new express.Router()
@@ -33,13 +33,13 @@ router.post("/register", async (req, res) => {
     const { name, email, mobile, password, confirmPassword } = req.body
 
     if (!name || !email || !mobile || !password || !confirmPassword) {
-        res.status(422).json({ error: "Fill all the data!" })
-        console.log("No data available")
+        res.status(422).json({ error: "Fill all the data!" });
     }
 
     try {
         const preUser = await User.findOne({ email: email })
 
+        const existingMobile = await User.findOne({ mobile: mobile }); 
         if (preUser) {
             res.status(422).json({
                 error
@@ -49,6 +49,11 @@ router.post("/register", async (req, res) => {
             res.status(422).json({
                 error
                     : "Confirm password doesn't match to the password."
+            })
+        } else if (existingMobile) {
+            res.status(422).json({
+                error
+                    : 'Mobile number already exists.'
             })
         } else {
             const finalUser = new User({
@@ -60,7 +65,7 @@ router.post("/register", async (req, res) => {
             res.status(201).json(storeData)
         }
     } catch (error) {
-        throw new Error("Error while registering user.")
+        throw new Error("Error while registering user."+ error.message)
     }
 
 })
