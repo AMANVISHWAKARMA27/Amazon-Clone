@@ -1,7 +1,6 @@
 import express from "express";
 import { Products } from "../models/productSchema.js";
 import User from "../models/userSchema.js";
-import { error } from "console";
 
 export const router = new express.Router()
 
@@ -69,3 +68,4 @@ router.post("/register", async (req, res) => {
     }
 
 })
+

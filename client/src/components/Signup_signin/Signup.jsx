@@ -22,6 +22,32 @@ function Signup() {
     })
   }
 
+  const sendUser = async (e) => {
+    e.preventDefault()
+    const { name, email, mobile, password, confirmPassword } = logData
+    try {
+      const res = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name, email, mobile, password, confirmPassword
+        })
+      })
+
+      const data = await res.json()
+      if (res.status === 422 || !data) {
+        alert("Could not register user.")
+      } else {
+        setLogData({ ...logData, name: "", email: "", mobile: "", password: "", confirmPassword: "" })
+        alert('User registered successfully.')
+      }
+    } catch (error) {
+      console.log("Frontend Error, " + error.message)
+    }
+  }
+
   return (
     <>
       <section>
@@ -30,7 +56,7 @@ function Signup() {
             <img src='./blacklogoamazon.png' alt='' />
           </div>
           <div className='sign_form'>
-            <form>
+            <form method='POST'>
               <h1>Sign Up</h1>
               <div className='form_data'>
                 <label htmlFor='yourname'>Your Name</label>
@@ -78,7 +104,7 @@ function Signup() {
                   name="confirmPassword"
                   id='password' />
               </div>
-              <button className='signin_btn'>Continue</button>
+              <button className='signin_btn' onClick={sendUser}>Continue</button>
             </form>
           </div>
 
