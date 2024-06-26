@@ -14,9 +14,39 @@ function Signin() {
     setLogData(() => {
       return {
         ...logData,
-        [name]:value
+        [name]: value
       }
     })
+  }
+
+  const sendData = async (e) => {
+    e.preventDefault()
+    const { email, password } = logData
+
+    if (!password || !email) {
+      alert("Enter the data completely.")
+    }
+
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email, password
+      })
+    })
+
+    const data = await res.json()
+    console.log(data)
+
+
+    if (res.status === 400 || !data) {
+      console.log("Invalid details.")
+    } else {
+      console.log('Data is valid.')
+      setLogData({ ...logData, email: "", password: "" })
+    }
   }
 
   return (
@@ -27,7 +57,7 @@ function Signin() {
             <img src='./blacklogoamazon.png' alt='' />
           </div>
           <div className='sign_form'>
-            <form>
+            <form method='POST'>
               <h1>Sign In</h1>
               <div className='form_data'>
                 <label htmlFor='email'>Email</label>
@@ -52,7 +82,7 @@ function Signin() {
                   <p className='forgot_password'>Forgot Password?</p>
                 </NavLink>
               </div>
-              <button className='signin_btn'>Continue</button>
+              <button className='signin_btn' onClick={sendData}>Continue</button>
             </form>
           </div>
 

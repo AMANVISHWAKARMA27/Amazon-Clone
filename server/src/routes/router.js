@@ -1,6 +1,7 @@
 import express from "express";
 import { Products } from "../models/productSchema.js";
 import User from "../models/userSchema.js";
+import bcryptjs from "bcryptjs"
 
 export const router = new express.Router()
 
@@ -38,7 +39,7 @@ router.post("/register", async (req, res) => {
     try {
         const preUser = await User.findOne({ email: email })
 
-        const existingMobile = await User.findOne({ mobile: mobile }); 
+        const existingMobile = await User.findOne({ mobile: mobile });
         if (preUser) {
             res.status(422).json({
                 error
@@ -64,8 +65,33 @@ router.post("/register", async (req, res) => {
             res.status(201).json(storeData)
         }
     } catch (error) {
-        throw new Error("Error while registering user."+ error.message)
+        throw new Error("Error while registering user." + error.message)
     }
 
 })
 
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        res.status(400).json({ Error: "Fill up a;; the details" })
+    }
+
+    try {
+        const userLogin = await User.findOne({ email: email })
+        console.log(userLogin)
+
+        if (userLogin) {
+            const isPasswordMatched = await bcryptjs.compare(password, userLogin.password)
+            console.log(isPasswordMatched)
+
+            if (!isPasswordMatched) {
+                res.status(400).json({ Error: "Invalid password." })
+            } else {
+                res.status(201).json(userLogin)
+            }
+        }
+    } catch (error) {
+        res.status(400).json({ error: "Invalid details." })
+    }
+})
