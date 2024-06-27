@@ -85,12 +85,15 @@ router.post("/login", async (req, res) => {
             const isPasswordMatched = await bcryptjs.compare(password, userLogin.password)
             console.log(isPasswordMatched)
 
-
             if (!isPasswordMatched) {
                 res.status(400).json({ Error: "Invalid password." })
                 console.log("Couldnt process..")
             } else {
                 const token = await userLogin.generateAuthToken()
+                res.cookie("AmazonClone", token, {
+                    expires: new Date(Date.now() + 900000),
+                    httpOnly: true
+                })
                 console.log("token: " + token)
                 res.status(201).json(userLogin)
             }
