@@ -79,17 +79,23 @@ router.post("/login", async (req, res) => {
 
     try {
         const userLogin = await User.findOne({ email: email })
-        console.log(userLogin)
+        console.log("USer: " + userLogin)
 
         if (userLogin) {
             const isPasswordMatched = await bcryptjs.compare(password, userLogin.password)
             console.log(isPasswordMatched)
 
+
             if (!isPasswordMatched) {
                 res.status(400).json({ Error: "Invalid password." })
+                console.log("Couldnt process..")
             } else {
+                const token = await userLogin.generateAuthToken()
+                console.log("token: " + token)
                 res.status(201).json(userLogin)
             }
+        } else {
+            res.status(400).json({ Error: "something went wrong while loggng in the user." })
         }
     } catch (error) {
         res.status(400).json({ error: "Invalid details." })

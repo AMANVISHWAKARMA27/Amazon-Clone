@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
-import { type } from "os";
 import validator from "validator"
 import bcryptjs from "bcryptjs"
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+
+dotenv.config({
+    path: "./.env"
+})
+
+const secret = process.env.KEY;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -56,7 +63,20 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-const User = new mongoose.model("User", userSchema)
+// token generation
+userSchema.methods.generateAuthToken = async function () {
+    try {
+        const token = jwt.sign({ _id: this._id }, secret);
+        console.log("Generated token:", token); 
+        this.tokens = this.tokens.concat({ token: token });
+        await this.save();
+        return token;
 
+    } catch (error) {
+        console.log("Error while generating token:" + error.message);
+    }
+}
+
+const User = new mongoose.model("User", userSchema)
 
 export default User
