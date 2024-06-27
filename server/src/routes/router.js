@@ -2,6 +2,7 @@ import express from "express";
 import { Products } from "../models/productSchema.js";
 import User from "../models/userSchema.js";
 import bcryptjs from "bcryptjs"
+import { authenticate } from "../middlewares/authenticate.js"
 
 export const router = new express.Router()
 
@@ -102,5 +103,27 @@ router.post("/login", async (req, res) => {
         }
     } catch (error) {
         res.status(400).json({ error: "Invalid details." })
+    }
+})
+
+router.post("/addCart/:id", authenticate, async (req, res) => {
+    try {
+        const { id } = req.params
+        const cart = await Products.findOne({ id: id })
+        console.log("User cart value: " + cart)
+
+        const userContact = await User.findOne({ _id: req.userId })
+        console.log(userContact)
+
+        if (userContact) {
+            const cartData = await userContact.addCartData(cart)
+            await userContact.save()
+            console.log(cartData)
+            res.status(201).json(userContact)
+        } else {
+            res.status(401).json({ error: "invalid user" })
+        }
+    } catch (error) {
+        console.log("Couldn't add to cart: " + error.message)
     }
 })

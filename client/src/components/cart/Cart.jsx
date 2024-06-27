@@ -35,6 +35,31 @@ const Cart = () => {
         getIndividualData()
     }, [id])
 
+    // add to cart implementation
+    const addToCart = async (id) => {
+        const checkResponse = await fetch(`/addCart/${id}`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content_Type": "application/json"
+            },
+            body: JSON.stringify({
+                indData
+            }),
+            credentials: "include"
+        })
+
+        const data = await checkResponse.json()
+        console.log("Frontend Data: " + data)
+
+        if (checkResponse.status === 401 || !data) {
+            console.log("Invalid user")
+            alert("Invalid User")
+        } else {
+            alert('Item added to the cart')
+        }
+    }
+
 
     return (
 
@@ -43,7 +68,7 @@ const Cart = () => {
                 <div className="left_cart">
                     <img src={indData.url} alt="cart" />
                     <div className="cart_btn">
-                        <button className="cart_btn1" >Add to Cart</button>
+                        <button className="cart_btn1" onClick={() => addToCart(indData.id)}>Add to Cart</button>
                         <button className="cart_btn2">Buy Now</button>
                     </div>
                 </div>

@@ -67,13 +67,23 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.generateAuthToken = async function () {
     try {
         const token = jwt.sign({ _id: this._id }, secret);
-        console.log("Generated token:", token); 
+        console.log("Generated token:", token);
         this.tokens = this.tokens.concat({ token: token });
         await this.save();
         return token;
 
     } catch (error) {
         console.log("Error while generating token:" + error.message);
+    }
+}
+
+userSchema.methods.addCartData = async function (cart) {
+    try {
+        this.carts = this.carts.concat(cart)
+        await this.save()
+        return this.carts
+    } catch (error) {
+        console.log(error)
     }
 }
 
