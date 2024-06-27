@@ -1,12 +1,18 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useContext } from 'react'
 import "./navbar.css"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Avatar from '@mui/material/Avatar';
 import { NavLink } from "react-router-dom"
+import { LoginContext } from '../context/ContextProvider';
 
 function Navbar() {
+    const {account, setAccount} = useContext(LoginContext)
+    console.log(account)
+    const cartCount = account?.carts?.length ?? 0;
+
     return (
         <header>
             <nav>
@@ -32,7 +38,7 @@ function Navbar() {
                         </NavLink>
                     </div>
                     <div className='cart_btn'>
-                        <Badge badgeContent={4} color="primary">
+                        <Badge badgeContent={cartCount} color="primary">
                             <ShoppingCartIcon id="icon" />
                         </Badge>
                         <p>Cart</p>

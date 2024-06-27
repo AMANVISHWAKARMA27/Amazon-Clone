@@ -1,13 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./cart.css"
 import { Divider } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { LoginContext } from '../context/ContextProvider'
 
 
 const Cart = () => {
 
     const { id } = useParams("")
+
+    const history = useNavigate("")
+
+    const { account, setAccount } = useContext(LoginContext)
+    console.log(account)
 
     const [indData, setIndData] = useState({})
     console.log(indData)
@@ -57,6 +63,8 @@ const Cart = () => {
             alert("Invalid User")
         } else {
             alert('Item added to the cart')
+            history("/buynow")
+            setAccount(data)
         }
     }
 

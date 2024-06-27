@@ -44,6 +44,7 @@ function Signin() {
     if (res.status === 400 || !data) {
       console.log("Invalid details.")
     } else {
+      alert("User loggedin successfully.")
       console.log('Data is valid.')
       setLogData({ ...logData, email: "", password: "" })
     }
