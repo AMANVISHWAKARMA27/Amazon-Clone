@@ -127,3 +127,12 @@ router.post("/addCart/:id", authenticate, async (req, res) => {
         console.log("Couldn't add to cart: " + error.message)
     }
 })
+
+router.get("/cartdetails", authenticate, async (req, res) => {
+    try {
+        const buyUser = await User.findOne({ _id: req.userId })
+        res.status(201).json(buyUser)
+    } catch (error) {
+        console.log("Error: " + error.message)
+    }
+})

@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom"
 import { LoginContext } from '../context/ContextProvider';
 
 function Navbar() {
-    const {account, setAccount} = useContext(LoginContext)
+    const { account, setAccount } = useContext(LoginContext)
     console.log(account)
     const cartCount = account?.carts?.length ?? 0;
 
@@ -38,12 +38,28 @@ function Navbar() {
                         </NavLink>
                     </div>
                     <div className='cart_btn'>
-                        <Badge badgeContent={cartCount} color="primary">
-                            <ShoppingCartIcon id="icon" />
-                        </Badge>
+                        {
+                            account ? <NavLink
+                                to={"/buynow"}>
+                                <Badge badgeContent={cartCount} color="primary">
+                                    <ShoppingCartIcon id="icon" />
+                                </Badge>
+                            </NavLink> : <NavLink
+                                to={"/login"}>
+                                <Badge badgeContent={0} color="primary">
+                                    <ShoppingCartIcon id="icon" />
+                                </Badge>
+                            </NavLink>
+                        }
                         <p>Cart</p>
+
                     </div>
-                    <Avatar className='avtar' />
+                    {
+                        account ? <Avatar className='avtar2'>
+                            {account.name[0].toUpperCase()}
+                        </Avatar> : <Avatar className='avtar'></Avatar>
+                    }
+
                 </div>
             </nav>
         </header>
