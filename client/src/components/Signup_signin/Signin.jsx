@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from 'react'
 import "./signup.css"
 import { NavLink } from 'react-router-dom'
+import { LoginContext } from '../context/ContextProvider'
 
 function Signin() {
 
@@ -8,6 +10,8 @@ function Signin() {
     email: "",
     password: ""
   })
+
+  const { account, setAccount } = useContext(LoginContext)
 
   const addData = (e) => {
     const { name, value } = e.target
@@ -46,6 +50,7 @@ function Signin() {
     } else {
       alert("User loggedin successfully.")
       console.log('Data is valid.')
+      setAccount(data)
       setLogData({ ...logData, email: "", password: "" })
     }
   }

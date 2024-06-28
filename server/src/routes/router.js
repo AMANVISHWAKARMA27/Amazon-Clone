@@ -136,3 +136,29 @@ router.get("/cartdetails", authenticate, async (req, res) => {
         console.log("Error: " + error.message)
     }
 })
+
+router.get("/validuser", authenticate, async (req, res) => {
+    try {
+        const validUser = await User.findOne({ _id: req.userId })
+        res.status(201).json(validUser)
+    } catch (error) {
+        console.log("Error: " + error.message)
+    }
+})
+
+router.delete("/remove/:id", authenticate, async (req, res) => {
+    try {
+        const { id } = req.params
+
+        req.user.carts = req.user.carts.filter((curVal) => {
+            return curVal.id != id
+        })
+
+        req.user.save()
+        res.status(201).json(req.user)
+        console.log("Item removed successfully.")
+    } catch (error) {
+        console.log("Error while deleting the item: " + error.message)
+        res.status(400).json(req.user)
+    }
+})

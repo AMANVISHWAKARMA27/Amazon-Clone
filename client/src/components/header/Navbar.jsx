@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./navbar.css"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Badge from '@mui/material/Badge';
@@ -12,6 +12,30 @@ function Navbar() {
     const { account, setAccount } = useContext(LoginContext)
     console.log(account)
     const cartCount = account?.carts?.length ?? 0;
+
+    const getValidUserDetail = async () => {
+        const res = await fetch("/validuser", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        const data = await res.json()
+        console.log(data)
+        if ( res.status !== 201){
+            console.log('Error')
+        } else {
+            console.log("Data valid")
+            setAccount(data)
+        }
+    }
+
+    useEffect(() => {
+        getValidUserDetail()
+    }, [])
 
     return (
         <header>

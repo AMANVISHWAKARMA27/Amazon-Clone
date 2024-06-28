@@ -54,7 +54,7 @@ export const Buynow = () => {
                                                 <p className='unusuall'>Usually dispatched in 8 days</p>
                                                 <p>Eligible for FREE shippimng</p>
                                                 <img src='https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png' alt='' />
-                                                <Option />
+                                                <Option deletedata={e.id} get={getBuyData}/>
                                             </div>
                                             <h3 className='item_price'>&#8377;{e.price.cost}</h3>
                                         </div>
