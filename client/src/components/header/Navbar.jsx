@@ -5,7 +5,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Avatar from '@mui/material/Avatar';
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { LoginContext } from '../context/ContextProvider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,6 +19,8 @@ function Navbar() {
     const { account, setAccount } = useContext(LoginContext)
     console.log(account)
     const cartCount = account?.carts?.length ?? 0;
+
+    const history = useNavigate()
 
     const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -48,6 +50,28 @@ function Navbar() {
 
     const handleDrawerClose = () => {
         setDrawerOpen(false)
+    }
+
+    const logoutUser = async () => {
+        const res2 = await fetch("/logout", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        const data2 = await res2.json()
+        console.log(data2)
+        if (res2.status !== 201) {
+            console.log("User couldn't be logged out")
+        } else {
+            console.log("User data is valid")
+            alert("User logged out successfully.")
+            setAccount(false)
+            history("/")
+        }
     }
 
     useEffect(() => {
@@ -137,7 +161,7 @@ function Navbar() {
                     >
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         {
-                            account ? <MenuItem onClick={handleClose}><LogoutIcon/>&nbsp;Logout</MenuItem> : <NavLink to={"/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
+                            account ? <MenuItem onClick={logoutUser}><LogoutIcon/>&nbsp;Logout</MenuItem> : <NavLink to={"/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
                         }
 
                     </Menu>
