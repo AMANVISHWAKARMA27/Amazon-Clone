@@ -15,7 +15,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser(""))
 app.use(cors({
-    origin:"https://amazon-clone-client-gamma.vercel.app"
+    origin:"https://amazon-clone-client-kcr3muyzm-whilst-somebodys-projects.vercel.app"
 }))
 app.use(router)
 
