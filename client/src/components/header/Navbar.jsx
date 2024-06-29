@@ -14,6 +14,9 @@ import RightHeader from './RightHeader';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useSelector } from 'react-redux';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 function Navbar() {
     const { account, setAccount } = useContext(LoginContext)
@@ -21,6 +24,12 @@ function Navbar() {
     const cartCount = account?.carts?.length ?? 0;
 
     const history = useNavigate()
+
+    const [text, setText] = useState("")
+    console.log(text)
+    const [listOpen, setListOpen] = useState("")
+
+    const { products } = useSelector(state => state.getProductsData)
 
     const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -74,6 +83,11 @@ function Navbar() {
         }
     }
 
+    const getText = (item) => {
+        setText(item)
+        setListOpen(false)
+    }
+
     useEffect(() => {
         getValidUserDetail()
     })
@@ -103,11 +117,28 @@ function Navbar() {
                             <img src="./amazon_PNG25.png" alt='' />
                         </NavLink>
                     </div>
-                    <div className='nav_searchbaar'>
-                        <input type='text' name='' id='' />
+                    <div className='nav_searchbar'>
+                        <input
+                            type='text'
+                            onChange={(e) => getText(e.target.value)}
+                            placeholder='Search your products' />
                         <div className='search_icon'>
                             <SearchOutlinedIcon id="search" />
                         </div>
+                        {
+                            text &&
+                            <List className='extrasearch' hidden={listOpen}>
+                                {
+                                    products.filter(product => product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
+                                        <ListItem>
+                                            <NavLink to={`/getproductsone/${product.id}`} onClick={() => setListOpen(true)}>
+                                                {product.title.longTitle}
+                                            </NavLink>
+                                        </ListItem>
+                                    ))
+                                }
+                            </List>
+                        }
                     </div>
                 </div>
                 <div className='right'>
@@ -161,7 +192,7 @@ function Navbar() {
                     >
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         {
-                            account ? <MenuItem onClick={logoutUser}><LogoutIcon/>&nbsp;Logout</MenuItem> : <NavLink to={"/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
+                            account ? <MenuItem onClick={logoutUser}><LogoutIcon />&nbsp;Logout</MenuItem> : <NavLink to={"/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
                         }
 
                     </Menu>
