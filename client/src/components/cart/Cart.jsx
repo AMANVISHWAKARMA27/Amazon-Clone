@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react'
 import "./cart.css"
-import { Divider } from '@mui/material'
+import { CircularProgress, Divider } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LoginContext } from '../context/ContextProvider'
 
@@ -15,7 +15,7 @@ const Cart = () => {
     const { account, setAccount } = useContext(LoginContext)
     console.log(account)
 
-    const [indData, setIndData] = useState({})
+    const [indData, setIndData] = useState("")
     console.log(indData)
 
     const getIndividualData = async () => {
@@ -38,7 +38,8 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        getIndividualData()
+        setTimeout(getIndividualData, 1500)
+
     }, [id])
 
     // add to cart implementation
@@ -72,7 +73,7 @@ const Cart = () => {
     return (
 
         <div className="cart_section">
-            <div className="cart_container">
+            {indData && Object.keys(indData).length && <div className="cart_container">
                 <div className="left_cart">
                     <img src={indData.url} alt="cart" />
                     <div className="cart_btn">
@@ -96,7 +97,12 @@ const Cart = () => {
                     </div>
                     <p className="description">About the Iteam : <span style={{ color: "#565959", fontSize: "14px", fontWeight: "500", letterSpacing: "0.4px" }}> {indData.description}</span></p>
                 </div>
-            </div>
+            </div>}
+
+            {!indData ? <div className="circle">
+                <CircularProgress />
+                <h2> Loading....</h2>
+            </div> : ""}
         </div>
     )
 }
