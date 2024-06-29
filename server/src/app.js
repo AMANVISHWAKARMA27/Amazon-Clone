@@ -14,16 +14,7 @@ connectDb()
 const app = express()
 app.use(express.json())
 app.use(cookieParser(""))
-const allowedOrigins = ['https://amazon-clone-client-gamma.vercel.app', 'https://amazon-clone-client-kcr3muyzm-whilst-somebodys-projects.vercel.app'];
-app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-}));
+app.use(cors())
 app.use(router)
 
 app.listen(process.env.PORT, () => {
