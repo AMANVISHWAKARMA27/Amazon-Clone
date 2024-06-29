@@ -28,11 +28,13 @@ header nav .left{
     justify-content:space-around;
     align-items: center;
     /* border: 2px solid red; */
-    flex: .8;
+    flex: .7;
 }
 
+
+
 header nav .left input{
-    width:950px;
+    width:400px;
     height: 38px;
     border: none;
     outline: none;
@@ -44,7 +46,7 @@ header nav .left input{
 
 header nav .left .search_icon{
     background-color: #febd69;
-    height: 40px;
+    height: 38px;
     width: 40px;
     display: flex;
     justify-content: center;
@@ -69,7 +71,7 @@ header nav .right{
     justify-content:center;
     align-items: center;
     /* border: 2px solid red; */
-    flex: .2;
+    flex: .3;
 }
 
 header nav .right .nav_btn a{

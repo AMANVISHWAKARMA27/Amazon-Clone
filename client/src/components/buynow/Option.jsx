@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react'
 import "./buynow.css"
 import { LoginContext } from '../context/ContextProvider'
