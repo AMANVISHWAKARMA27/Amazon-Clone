@@ -50,7 +50,7 @@ function Slide({ title, products }) {
         >
           {products.map((e) => {
             return (
-              <NavLink to={`https://amazon-clone-1-rwc2.onrender.com/getproductsone/${e.id}`}>
+              <NavLink to={`/getproductsone/${e.id}`}>
                 <div className='products_items' key={e.id}>
                   <div className='product_img'>
                     <img src={e.url} alt='' />

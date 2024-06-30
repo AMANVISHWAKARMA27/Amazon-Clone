@@ -79,7 +79,7 @@ function Navbar() {
             console.log("User data is valid")
             alert("User logged out successfully.")
             setAccount(false)
-            history("https://amazon-clone-1-rwc2.onrender.com/")
+            history("/")
         }
     }
 
@@ -113,7 +113,7 @@ function Navbar() {
                     </Drawer>
                     <div className='navlogo'>
                         <NavLink
-                            to={"https://amazon-clone-1-rwc2.onrender.com/"}>
+                            to={"/"}>
                             <img src="./amazon_PNG25.png" alt='' />
                         </NavLink>
                     </div>
@@ -131,7 +131,7 @@ function Navbar() {
                                 {
                                     products.filter(product => product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
                                         <ListItem>
-                                            <NavLink to={`https://amazon-clone-1-rwc2.onrender.com/getproductsone/${product.id}`} onClick={() => setListOpen(true)}>
+                                            <NavLink to={`/getproductsone/${product.id}`} onClick={() => setListOpen(true)}>
                                                 {product.title.longTitle}
                                             </NavLink>
                                         </ListItem>
@@ -144,19 +144,19 @@ function Navbar() {
                 <div className='right'>
                     <div className='nav_btn'>
                         <NavLink
-                            to={"https://amazon-clone-1-rwc2.onrender.com/login"}
+                            to={"/login"}
                         >Sign In
                         </NavLink>
                     </div>
                     <div className='cart_btn'>
                         {
                             account ? <NavLink
-                                to={"https://amazon-clone-1-rwc2.onrender.com/buynow"}>
+                                to={"/buynow"}>
                                 <Badge badgeContent={cartCount} color="primary">
                                     <ShoppingCartIcon id="icon" />
                                 </Badge>
                             </NavLink> : <NavLink
-                                to={"https://amazon-clone-1-rwc2.onrender.com/login"}>
+                                to={"/login"}>
                                 <Badge badgeContent={0} color="primary">
                                     <ShoppingCartIcon id="icon" />
                                 </Badge>
@@ -192,7 +192,7 @@ function Navbar() {
                     >
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         {
-                            account ? <MenuItem onClick={logoutUser}><LogoutIcon />&nbsp;Logout</MenuItem> : <NavLink to={"https://amazon-clone-1-rwc2.onrender.com/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
+                            account ? <MenuItem onClick={logoutUser}><LogoutIcon />&nbsp;Logout</MenuItem> : <NavLink to={"/login"}><MenuItem onClick={handleClose}>SignIn/SignUp</MenuItem></NavLink>
                         }
 
                     </Menu>

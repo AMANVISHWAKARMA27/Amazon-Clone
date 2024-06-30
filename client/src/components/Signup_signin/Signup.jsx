@@ -112,7 +112,7 @@ function Signup() {
             <div className='create_accountinfo'>
               <p>Already Have An Account?</p>
               <NavLink
-                to={"https://amazon-clone-1-rwc2.onrender.com/login"}>
+                to={"/login"}>
                 <button>Go To Sign In</button>
               </NavLink>
             </div>

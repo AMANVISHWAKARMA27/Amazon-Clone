@@ -64,7 +64,7 @@ const Cart = () => {
             alert("Invalid User")
         } else {
             alert('Item added to the cart')
-            history("https://amazon-clone-1-rwc2.onrender.com/buynow")
+            history("/buynow")
             setAccount(data)
         }
     }
