@@ -34,32 +34,24 @@ function Navbar() {
     const [drawerOpen, setDrawerOpen] = useState(false)
 
     const getValidUserDetail = async () => {
-        try {
-            const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/validuser", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                credentials: "include" // Ensure cookies are sent
-            });
+        const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/validuser", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
 
-            if (res.status !== 201) {
-                console.error('Error:', res.statusText);
-                if (res.status === 401) {
-                    console.error('Unauthorized access. Redirecting to login.');
-                    history('/login'); // Redirect to login page
-                }
-            } else {
-                const data = await res.json();
-                console.log("Data valid");
-                setAccount(data);
-            }
-        } catch (error) {
-            console.error('Error fetching user details:', error);
+        const data = await res.json()
+        console.log(data)
+        if (res.status !== 201) {
+            console.log('Error')
+        } else {
+            console.log("Data valid")
+            setAccount(data)
         }
-    };
-
+    }
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true)

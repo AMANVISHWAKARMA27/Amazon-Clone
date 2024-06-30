@@ -1,36 +1,33 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userSchema.js";
-import dotenv from 'dotenv';
+import jwt from "jsonwebtoken"
+import User from "../models/userSchema.js"
+import dotenv from 'dotenv'
 
 dotenv.config({
     path: './.env'
-});
+})
 
-const secretKey = process.env.KEY;
+const secretKey = process.env.KEY
 
 export const authenticate = async (req, res, next) => {
     try {
-        const cookie = req.cookies.AmazonClone;
+        const cookie = req.cookies.AmazonClone
+        const verifyCookie = jwt.verify(cookie, secretKey)
+        console.log(verifyCookie)
 
-        if (!cookie) {
-            return res.status(401).json({ error: "Unauthorized User: No token provided" });
-        }
-
-        const verifyCookie = jwt.verify(cookie, secretKey);
-
-        const user = await User.findOne({ _id: verifyCookie._id, "tokens.token": cookie });
+        const user = await User.findOne({ _id: verifyCookie._id, "tokens.token": cookie })
+        console.log(user)
 
         if (!user) {
-            return res.status(401).json({ error: "Unauthorized User: User not found" });
+            throw new Error("User not found.")
         }
 
-        req.token = cookie;
-        req.user = user;
-        req.userId = user._id;
+        req.token = cookie
+        req.user = user
+        req.userId = user._id
 
-        next();
+        next()
     } catch (error) {
-        console.log("Authentication Error: " + error.message);
-        res.status(401).json({ error: "Unauthorized User: " + error.message });
+        console.log("Authentiation Error: " + error.message)
+        res.status(401).send("Unauthorized User")
     }
-};
+}
