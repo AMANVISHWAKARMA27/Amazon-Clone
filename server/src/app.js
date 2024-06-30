@@ -24,6 +24,11 @@ app.use(express.json())
 app.use(cookieParser(""))
 app.use(router)
 
+app.use((req, res, next) => {
+    console.log('Request Headers:', req.headers);
+    next();
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at port ${process.env.PORT}`)
 })
