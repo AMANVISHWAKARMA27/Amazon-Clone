@@ -12,7 +12,14 @@ dotenv.config({
 connectDb()
 
 const app = express()
-app.use(cors());
+const corsOptions = {
+    origin: 'https://amazon-clone-client-gamma.vercel.app',
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  };
+
+  app.use(cors(corsOptions));
 app.use(express.json())
 app.use(cookieParser(""))
 app.use(router)
