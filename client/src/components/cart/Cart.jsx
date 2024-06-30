@@ -19,7 +19,7 @@ const Cart = () => {
     console.log(indData)
 
     const getIndividualData = async () => {
-        const res = await fetch(`/getproductsone/${id}`, {
+        const res = await fetch(`https://amazon-clone-1-rwc2.onrender.com/getproductsone/${id}`, {
             method: "GET",
             headers: {
                 "content-Type": "application/json"
@@ -44,7 +44,7 @@ const Cart = () => {
 
     // add to cart implementation
     const addToCart = async (id) => {
-        const checkResponse = await fetch(`/addCart/${id}`, {
+        const checkResponse = await fetch(`https://amazon-clone-1-rwc2.onrender.com/addCart/${id}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -64,7 +64,7 @@ const Cart = () => {
             alert("Invalid User")
         } else {
             alert('Item added to the cart')
-            history("/buynow")
+            history("https://amazon-clone-1-rwc2.onrender.com/buynow")
             setAccount(data)
         }
     }

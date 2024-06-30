@@ -28,12 +28,12 @@ function App() {
       <Navbar />
       <Newnav />
       <Routes>
-        <Route path="/" element={<Maincomponent />} />
-        <Route path="/login" element={<Signin />} />
-        <Route path="/register" element={<Signup />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/getproductsone/:id" element={<Cart />} />
-        <Route path="/buynow" element={<Buynow />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/" element={<Maincomponent />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/login" element={<Signin />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/register" element={<Signup />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/forgotpassword" element={<ForgotPassword />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/getproductsone/:id" element={<Cart />} />
+        <Route path="https://amazon-clone-1-rwc2.onrender.com/buynow" element={<Buynow />} />
       </Routes>
       <Footer /></>): (
         <div className="circle">

@@ -26,7 +26,7 @@ function Signup() {
     e.preventDefault()
     const { name, email, mobile, password, confirmPassword } = logData
     try {
-      const res = await fetch("/register", {
+      const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -112,7 +112,7 @@ function Signup() {
             <div className='create_accountinfo'>
               <p>Already Have An Account?</p>
               <NavLink
-                to={"/login"}>
+                to={"https://amazon-clone-1-rwc2.onrender.com/login"}>
                 <button>Go To Sign In</button>
               </NavLink>
             </div>

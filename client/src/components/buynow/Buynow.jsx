@@ -10,7 +10,7 @@ export const Buynow = () => {
     // console.log(cartData?.carts)
 
     const getBuyData = async () => {
-        const res = await fetch("/cartdetails", {
+        const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/cartdetails", {
             method: "GET",
             headers: {
                 Accept: "application/json",

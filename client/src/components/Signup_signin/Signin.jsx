@@ -31,7 +31,7 @@ function Signin() {
       alert("Enter the data completely.")
     }
 
-    const res = await fetch("/login", {
+    const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -84,7 +84,7 @@ function Signin() {
                   id='password'
                   placeholder='Atleast 8 characters' />
                 <NavLink
-                  to={"/forgotpassword"}>
+                  to={"https://amazon-clone-1-rwc2.onrender.com/forgotpassword"}>
                   <p className='forgot_password'>Forgot Password?</p>
                 </NavLink>
               </div>
@@ -96,7 +96,7 @@ function Signin() {
             <div className='create_accountinfo'>
               <p>New To Amazon?</p>
               <NavLink
-                to={"/register"}>
+                to={"https://amazon-clone-1-rwc2.onrender.com/register"}>
                 <button>Create Your Amazon Account</button>
               </NavLink>
             </div>
