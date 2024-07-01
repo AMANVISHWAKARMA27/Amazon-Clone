@@ -54,7 +54,7 @@ const Cart = () => {
             body: JSON.stringify({
                 indData
             }),
-            credentials: "include"
+            credentials: true
         })
 
         const data = await checkResponse.json()
