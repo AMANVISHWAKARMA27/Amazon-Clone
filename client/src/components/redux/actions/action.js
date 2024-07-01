@@ -3,8 +3,9 @@ export const getProducts = () => async (dispatch) => {
         const data = await fetch("https://amazon-clone-1-rwc2.onrender.com/getproducts", {
             method:"GET",
             headers:{
-                "content-Type":"application/json"
-            }
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
         })
 
         const res = await data.json()

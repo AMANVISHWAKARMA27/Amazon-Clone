@@ -38,7 +38,8 @@ function Signin() {
       },
       body: JSON.stringify({
         email, password
-      })
+      }),
+      credentials:"include"
     })
 
     const data = await res.json()

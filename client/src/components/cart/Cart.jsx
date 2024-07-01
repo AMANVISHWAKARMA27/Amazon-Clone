@@ -22,7 +22,7 @@ const Cart = () => {
         const res = await fetch(`https://amazon-clone-1-rwc2.onrender.com/getproductsone/${id}`, {
             method: "GET",
             headers: {
-                "content-Type": "application/json"
+                "Content-Type": "application/json"
             },
             credentials:"include"
         })
