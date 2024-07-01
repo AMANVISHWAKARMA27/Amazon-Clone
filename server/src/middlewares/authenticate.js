@@ -10,24 +10,30 @@ const secretKey = process.env.KEY
 
 export const authenticate = async (req, res, next) => {
     try {
-        const cookie = req.cookies.AmazonClone
-        const verifyCookie = jwt.verify(cookie, secretKey)
-        console.log(verifyCookie)
+        const cookie = req.cookies.AmazonClone;
+        console.log("Cookie: ", cookie);
 
-        const user = await User.findOne({ _id: verifyCookie._id, "tokens.token": cookie })
-        console.log(user)
-
-        if (!user) {
-            throw new Error("User not found.")
+        if (!cookie) {
+            throw new Error("No token provided.");
         }
 
-        req.token = cookie
-        req.user = user
-        req.userId = user._id
+        const verifyCookie = jwt.verify(cookie, secretKey);
+        console.log("Verified Cookie: ", verifyCookie);
 
-        next()
+        const user = await User.findOne({ _id: verifyCookie._id, "tokens.token": cookie });
+        console.log("User: ", user);
+
+        if (!user) {
+            throw new Error("User not found.");
+        }
+
+        req.token = cookie;
+        req.user = user;
+        req.userId = user._id;
+
+        next();
     } catch (error) {
-        console.log("Authentiation Error: " + error.message)
-        res.status(401).send("Unauthorized User")
+        console.log("Authentication Error: " + error.message);
+        res.status(401).json({ error: "Unauthorized User" });
     }
 }

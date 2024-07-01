@@ -17,9 +17,10 @@ const corsOptions = {
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    sameSite:"none"
   };
 
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json())
 app.use(cookieParser(""))
 app.use(router)
