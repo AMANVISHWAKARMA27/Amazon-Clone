@@ -23,7 +23,8 @@ const Cart = () => {
             method: "GET",
             headers: {
                 "content-Type": "application/json"
-            }
+            },
+            credentials:"include"
         })
 
         const data = await res.json()
