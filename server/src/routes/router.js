@@ -71,8 +71,10 @@ router.post("/login", async (req, res) => {
             } else {
                 const token = await userLogin.generateAuthToken();
                 res.cookie("AmazonClone", token, {
-                    expires: new Date(Date.now() + 900000),
-                    httpOnly: true
+                    expires: new Date(Date.now() + 900000), // 15 minutes
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production', // Ensures the cookie is only sent over HTTPS in production
+                    sameSite: 'none' // Prevents CSRF attacks
                 });
                 res.status(201).json(userLogin);
             }
