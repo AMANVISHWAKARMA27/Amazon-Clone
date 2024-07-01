@@ -48,7 +48,7 @@ const Cart = () => {
             method: "POST",
             headers: {
                 Accept: "application/json",
-                "Content_Type": "application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 indData
