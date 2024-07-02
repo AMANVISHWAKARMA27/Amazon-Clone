@@ -113,8 +113,8 @@ router.get("/cartdetails", authenticate, async (req, res) => {
 
 router.get("/validuser", authenticate, async (req, res) => {
     try {
-        const validUser = await User.findOne({ _id: req.userId });
-        res.status(201).json(validUser);
+        const validUser = req.user; // User should be set by the authenticate middleware
+        res.status(200).json(validUser); // Change to 200 OK
     } catch (error) {
         console.log("Error: " + error.message);
         res.status(500).json({ error: "Server error" });
