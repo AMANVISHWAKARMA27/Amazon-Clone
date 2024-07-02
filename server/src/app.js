@@ -15,7 +15,7 @@ const app = express()
 const corsOptions = {
     origin: 'https://amazon-clone-client-gamma.vercel.app',
     credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     sameSite:"none"
   };
