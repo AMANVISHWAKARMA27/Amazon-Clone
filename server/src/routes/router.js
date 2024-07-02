@@ -130,7 +130,7 @@ router.delete("/remove/:id", authenticate, async (req, res) => {
     try {
         const { id } = req.params;
 
-        req.user.carts = req.user.carts.filter((curVal) => curVal.id !== id);
+        req.user.carts = req.user.carts.filter((curVal) => curVal._id.toString() !== id);
         await req.user.save();
         res.status(201).json(req.user);
     } catch (error) {
@@ -138,6 +138,7 @@ router.delete("/remove/:id", authenticate, async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
 
 router.get("/logout", authenticate, async (req, res) => {
     try {
