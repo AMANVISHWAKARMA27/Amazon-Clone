@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userSchema.js";
-import dotenv from 'dotenv';
+import jwt from "jsonwebtoken"
+import User from "../models/userSchema.js"
+import dotenv from 'dotenv'
 
 dotenv.config({
     path: './.env'
-});
+})
 
-const secretKey = process.env.KEY;
+const secretKey = process.env.KEY
 
 export const authenticate = async (req, res, next) => {
     try {
@@ -36,4 +36,4 @@ export const authenticate = async (req, res, next) => {
         console.log("Authentication Error: " + error.message);
         res.status(401).json({ error: "Unauthorized User" });
     }
-};
+}

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import validator from "validator";
-import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import validator from "validator"
+import bcryptjs from "bcryptjs"
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
 
 dotenv.config({
     path: "./.env"
-});
+})
 
 const secret = process.env.KEY;
 
@@ -50,21 +50,15 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    carts: [
-        {
-            productId: mongoose.Schema.Types.ObjectId,
-            name: String,
-            price: Number,
-            quantity: Number,
-            cartItemId: mongoose.Schema.Types.ObjectId // unique ID for each cart item
-        }
-    ]
-});
+
+    carts: Array
+})
 
 userSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
         this.password = await bcryptjs.hash(this.password, 12);
-        this.confirmPassword = await bcryptjs.hash(this.confirmPassword, 12);
+
+        this.confirmPassword = await bcryptjs.hash(this.confirmPassword, 12)
     }
     next();
 });
@@ -77,22 +71,22 @@ userSchema.methods.generateAuthToken = async function () {
         this.tokens = this.tokens.concat({ token: token });
         await this.save();
         return token;
+
     } catch (error) {
         console.log("Error while generating token:" + error.message);
     }
-};
+}
 
 userSchema.methods.addCartData = async function (cart) {
     try {
-        cart.cartItemId = new mongoose.Types.ObjectId(); // generate unique ID for cart item
-        this.carts = this.carts.concat(cart);
-        await this.save();
-        return this.carts;
+        this.carts = this.carts.concat(cart)
+        await this.save()
+        return this.carts
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
-};
+}
 
-const User = mongoose.model("User", userSchema);
+const User = new mongoose.model("User", userSchema)
 
-export default User;
+export default User

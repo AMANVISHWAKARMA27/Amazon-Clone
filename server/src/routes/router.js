@@ -89,17 +89,22 @@ router.post("/login", async (req, res) => {
 
 router.post("/addCart/:id", authenticate, async (req, res) => {
     try {
-        const { indData } = req.body;
-        const user = await User.findById(req.user._id);
+        const { id } = req.params;
+        const cart = await Products.findOne({ id: id });
+        const userContact = await User.findOne({ _id: req.userId });
 
-        user.addCartData(indData);
-        res.status(201).json(user);
+        if (userContact) {
+            const cartData = await userContact.addCartData(cart);
+            await userContact.save();
+            res.status(201).json(userContact);
+        } else {
+            res.status(401).json({ error: "Invalid user" });
+        }
     } catch (error) {
-        console.log("Error while adding item to cart: " + error.message);
+        console.log("Couldn't add to cart: " + error.message);
         res.status(500).json({ error: "Server error" });
     }
 });
-
 
 router.get("/cartdetails", authenticate, async (req, res) => {
     try {
@@ -113,19 +118,19 @@ router.get("/cartdetails", authenticate, async (req, res) => {
 
 router.get("/validuser", authenticate, async (req, res) => {
     try {
-        const validUser = req.user; // User should be set by the authenticate middleware
-        res.status(200).json(validUser); // Change to 200 OK
+        const validUser = await User.findOne({ _id: req.userId });
+        res.status(201).json(validUser);
     } catch (error) {
         console.log("Error: " + error.message);
         res.status(500).json({ error: "Server error" });
     }
 });
 
-router.delete("/remove/:cartItemId", authenticate, async (req, res) => {
+router.delete("/remove/:id", authenticate, async (req, res) => {
     try {
-        const { cartItemId } = req.params;
+        const { id } = req.params;
 
-        req.user.carts = req.user.carts.filter((item) => item.cartItemId.toString() !== cartItemId);
+        req.user.carts = req.user.carts.filter((curVal) => curVal.id !== id);
         await req.user.save();
         res.status(201).json(req.user);
     } catch (error) {
@@ -133,7 +138,6 @@ router.delete("/remove/:cartItemId", authenticate, async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
-
 
 router.get("/logout", authenticate, async (req, res) => {
     try {

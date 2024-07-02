@@ -35,7 +35,7 @@ function Navbar() {
 
     const getValidUserDetail = async () => {
         try {
-            const response = await fetch("https://amazon-clone-1-rwc2.onrender.com/validuser", {
+            const res = await fetch("https://amazon-clone-1-rwc2.onrender.com/validuser", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -44,10 +44,9 @@ function Navbar() {
                 credentials: "include"
             });
     
-            const data = await response.json();
+            const data = await res.json();
             console.log(data);
-    
-            if (response.status !== 200) {
+            if (res.status !== 201) {
                 console.log('Error: ', data.error || 'Unexpected error');
             } else {
                 console.log("Data valid");
@@ -57,7 +56,6 @@ function Navbar() {
             console.log('Fetch error: ', error);
         }
     };
-    
     
 
     const handleDrawerOpen = () => {
