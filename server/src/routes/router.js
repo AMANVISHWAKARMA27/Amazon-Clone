@@ -89,22 +89,17 @@ router.post("/login", async (req, res) => {
 
 router.post("/addCart/:id", authenticate, async (req, res) => {
     try {
-        const { id } = req.params;
-        const cart = await Products.findOne({ id: id });
-        const userContact = await User.findOne({ _id: req.userId });
+        const { indData } = req.body;
+        const user = await User.findById(req.user._id);
 
-        if (userContact) {
-            const cartData = await userContact.addCartData(cart);
-            await userContact.save();
-            res.status(201).json(userContact);
-        } else {
-            res.status(401).json({ error: "Invalid user" });
-        }
+        user.addCartData(indData);
+        res.status(201).json(user);
     } catch (error) {
-        console.log("Couldn't add to cart: " + error.message);
+        console.log("Error while adding item to cart: " + error.message);
         res.status(500).json({ error: "Server error" });
     }
 });
+
 
 router.get("/cartdetails", authenticate, async (req, res) => {
     try {
@@ -126,11 +121,11 @@ router.get("/validuser", authenticate, async (req, res) => {
     }
 });
 
-router.delete("/remove/:id", authenticate, async (req, res) => {
+router.delete("/remove/:cartItemId", authenticate, async (req, res) => {
     try {
-        const { id } = req.params;
+        const { cartItemId } = req.params;
 
-        req.user.carts = req.user.carts.filter((curVal) => curVal.id !== id);
+        req.user.carts = req.user.carts.filter((item) => item.cartItemId.toString() !== cartItemId);
         await req.user.save();
         res.status(201).json(req.user);
     } catch (error) {
@@ -138,6 +133,7 @@ router.delete("/remove/:id", authenticate, async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
 
 router.get("/logout", authenticate, async (req, res) => {
     try {

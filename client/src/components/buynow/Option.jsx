@@ -7,32 +7,33 @@ function Option({ deletedata, get }) {
 
     const { account, setAccount } = useContext(LoginContext)
 
-    const removeData = async (req, res) => {
+    const removeData = async (cartItemId) => {
         try {
-            const res = await fetch(`https://amazon-clone-1-rwc2.onrender.com/remove/${deletedata}`, {
+            const response = await fetch(`https://amazon-clone-1-rwc2.onrender.com/remove/${cartItemId}`, {
                 method: "DELETE",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
                 credentials: "include"
-            })
+            });
 
-            const data = await res.json()
-            console.log(data)
+            const data = await response.json();
+            console.log(data);
 
-            if (res.status === 400 || !data) {
-                console.log("Error while reovintg data");
+            if (response.status !== 201 || !data) {
+                console.log("Error while removing data");
             } else {
-                console.log("Item deleted successfully.")
-                setAccount(data)
-                get()
-                alert("Item removed successfully.")
+                console.log("Item deleted successfully.");
+                setAccount(data);
+                get();
+                alert("Item removed successfully.");
             }
         } catch (error) {
-            console.log('Error while deleting item: ' + error.message)
+            console.log('Error while deleting item: ' + error.message);
         }
-    }
+    };
+
     return (
         <div className='add_remove_select'>
             <select>

@@ -44,31 +44,36 @@ const Cart = () => {
     }, [id])
 
     // add to cart implementation
-    const addToCart = async (id) => {
-        const checkResponse = await fetch(`https://amazon-clone-1-rwc2.onrender.com/addCart/${id}`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                indData
-            }),
-            credentials: "include"
-        })
-
-        const data = await checkResponse.json()
-        console.log("Frontend Data: " + data)
-
-        if (checkResponse.status === 401 || !data) {
-            console.log("Invalid user")
-            alert("Invalid User")
-        } else {
-            alert('Item added to the cart')
-            history("/buynow")
-            setAccount(data)
+    const addToCart = async (id, indData) => {
+        try {
+            const checkResponse = await fetch(`https://amazon-clone-1-rwc2.onrender.com/addCart/${id}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    indData
+                }),
+                credentials: "include"
+            });
+    
+            const data = await checkResponse.json();
+            console.log("Frontend Data: " + data);
+    
+            if (checkResponse.status === 401 || !data) {
+                console.log("Invalid user");
+                alert("Invalid User");
+            } else {
+                alert('Item added to the cart');
+                history("/buynow");
+                setAccount(data);
+            }
+        } catch (error) {
+            console.log('Error while adding item: ' + error.message);
         }
-    }
+    };
+    
 
 
     return (
